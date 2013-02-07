@@ -1,0 +1,31 @@
+<h1>Listing items</h1>
+
+<table>
+  <tr>
+    <th>Id flux</th>
+    <th>Titre</th>
+    <th>Contenu</th>
+    <th>Date</th>
+    <th>Status</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @items.each do |item| %>
+  <tr>
+    <td><%= item.flux_id %></td>
+    <td><%= item.titre %></td>
+    <td><%= item.contenu %></td>
+    <td><%= item.date %></td>
+    <td><%= item.status %></td>
+    <td><%= link_to 'Show', item %></td>
+    <td><%= link_to 'Edit', edit_item_path(item) %></td>
+    <td><%= link_to 'Destroy', item, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Item', new_item_path %>
