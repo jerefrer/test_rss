@@ -1,0 +1,5 @@
+<% if item.read? %>
+  <%= render partial: 'items/mark_as_unread', locals: {item: item} %>
+<% else %>
+  <%= render partial: 'items/mark_as_read', locals: {item: item} %>
+<% end %>

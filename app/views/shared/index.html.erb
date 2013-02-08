@@ -1,48 +1,44 @@
-
-
 <div id="header">
-	<h1>RSS Reader</h1>
-	<%= link_to 'Nouveau Flux RSS', new_flux_path %>		
-		
+  <h1>RSS Reader</h1>
+  <%= link_to 'Nouveau Flux RSS', new_flux_path %>    
 </div>
-	
-	<div id="rss-content">
-		<h2>Flux RSS</h2>
-		
-		<%- @fluxes.each do |flux|%>
-		<div id="flux<%= flux.id %>">
-			
-			<h3><%= flux.titre %></h3>
-			
-				<%- flux.items.each do |item| %>
-			<div>
-				<p>
-					<span class="item-titre"><%= item.titre %> -- </span>
-					<span class="item-date"><%= item.date %></span><br />
-					<%= if item.contenu?
-						item.contenu.gsub(%r{</?[^>]+?>}, '') 
-						end %>
-					<%= link_to 'Marquer comme lu' %> 				<!-- link_to "Marquer comme lu", :controller => "items", :action => "update", :method => :put, :item => {:status => 'lu'} -->
-				</p>
-			</div>
-			<% end %>
-		</div>
-		<% end %>
-		
-	</div>
-	
-	<div id="rss-list">
-		<h2>Liste des Flux</h2>
-		<% @fluxes.each do |flux| %>
-		<ul>
-			<li>
-				<%= flux.titre %>
-				<%= button_to "x", {:controller => :fluxes, :action => 'destroy', :id => flux.id }, :remote => true, :class =>'delete_liste', :method => :delete %>
-			</li>
-		</ul>
-		<% end %>
-	</div>
-	
+
+<div id="rss-content">
+  <h2>Flux RSS</h2>
+
+  <%- @fluxes.each do |flux|%>
+    <div id="flux_<%= flux.id %>">
+      
+      <h3><%= flux.titre %></h3>
+      
+      <%- flux.items.each do |item| %>
+        <div>
+          <p>
+            <span class="item-titre"><%= item.titre %> -- </span>
+            <span class="item-date"><%= item.date %></span><br />
+            <%= item.contenu.gsub(%r{</?[^>]+?>}, '') if item.contenu? %>
+  					<%= render partial: 'items/read_button', locals: {item: item} %>
+          </p>
+      </div>
+      <% end %>
+    </div>
+  <% end %>
+  
+</div>
+
+<div id="rss-list">
+  <h2>Liste des Flux</h2>
+
+  <% @fluxes.each do |flux| %>
+    <ul>
+      <li id="<%= "flux_#{flux.id}_delete" %>">
+        <%= flux.titre %>
+        <%= button_to "x", {:controller => :fluxes, :action => :destroy, :id => flux.id }, :remote => true, :class => 'delete_liste', :method => :delete %>
+      </li>
+    </ul>
+  <% end %>
+</div>
+
 
 
 

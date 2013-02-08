@@ -48,5 +48,13 @@ class ItemsController < ApplicationController
 
     redirect_to items_path
   end
+
+  # POST /items/1/mark_as
+  def mark_as
+    @item = Item.find(params[:id])
+    params[:read] == "1" ? @item.read! : @item.unread!
+
+    redirect_to root_path
+  end
   
 end

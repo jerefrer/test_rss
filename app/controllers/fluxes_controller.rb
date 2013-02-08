@@ -47,9 +47,13 @@ class FluxesController < ApplicationController
     @flux.destroy
 
     respond_to do |format|
-      format.html { redirect_to("http://localhost:3000")}
-      format.json { head :no_content }
-      format.js   { render :nothing => true }
+      format.html { redirect_to root_path }
+      format.js   {
+        # Ici on se sert de jQuery pour demander à la boîte de flux et au bouton de suppression du flux de disparaître de la page.
+        # Ce code Javascript sera exécuté par le navigateur dès qu'il aura reçu le résultat de la requête AJAX effectuée par le click sur le X d'une suppression de flux
+        render :js => "$('#flux_#{@flux.id}').remove();" +
+                      "$('#flux_#{@flux.id}_delete').remove();"
+      }
     end
   end
 
